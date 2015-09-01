@@ -5,7 +5,6 @@
 		<title>Minerva</title>	
 	</head>
 	<body>
-
 	<?php
 	session_start();
 	?>
