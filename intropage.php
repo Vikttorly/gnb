@@ -19,13 +19,13 @@ Bienvenido <?php echo $_SESSION['session_username'];?>!
 		 <script src="/gnb/js/jquery-1.11.3.js"></script>
 	</head>
 
-<div class="parent2">
+<div class="parent1">
   <div class="test1"></div>
   <div class="test2"></div>
   <div class="test3"></div>
   <div class="test4" id="test4"></div>
   <div class="test5" id="test5"></div>
-  <div class="mask2"></div>
+  <div class="mask1"></div>
 </div>
 
 <script type="text/javascript">
@@ -37,7 +37,7 @@ $(document).ready(function() {
   var active4 = false;
   var active5 = false;
 
-    $('.parent2').on('mousedown touchstart', function() {
+    $('.parent1').on('mousedown touchstart', function() {
     
     if (!active1) $(this).find('.test1').css({'background-color': 'gray', 'transform': 'translate(-30px,125px)'});
     else $(this).find('.test1').css({'background-color': 'dimGray', 'transform': 'none'}); 
@@ -110,4 +110,59 @@ $("#contenido4").hide();
     });
   });
   </script>
+
+<script>
+$(document).ready(function(){
+   $(".mask1").mouseenter(function(e){
+       $("#tip1").fadeIn(500);
+   });
+   $(".mask1").mouseleave(function(e){
+      $("#tip1").css("display", "none");
+   });
+})
+</script>
+
+   <div class="tip" id="tip1">Abrir menú para añadir elementos</div>
+
+
+
+<div class="parent2">
+  <div class="test6"></div>
+  <div class="test7"></div>
+  <div class="test8"></div>
+  <div class="test9" id="test4"></div>
+  <div class="test10" id="test5"></div>
+  <div class="mask2"></div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+  var active1 = false;
+  var active2 = false;
+  var active3 = false;
+  var active4 = false;
+  var active5 = false;
+
+    $('.parent2').on('mousedown touchstart', function() {
+    
+    if (!active1) $(this).find('.test6').css({'background-color': 'gray', 'transform': 'translate(30px,125px)'});
+    else $(this).find('.test6').css({'background-color': 'dimGray', 'transform': 'none'}); 
+     if (!active2) $(this).find('.test7').css({'background-color': 'gray', 'transform': 'translate(-30px,115px)'});
+    else $(this).find('.test7').css({'background-color': 'darkGray', 'transform': 'none'});
+      if (!active3) $(this).find('.test8').css({'background-color': 'gray', 'transform': 'translate(-80px,80px)'});
+    else $(this).find('.test8').css({'background-color': 'silver', 'transform': 'none'});
+      if (!active4) $(this).find('.test9').css({'background-color': 'gray', 'transform': 'translate(-120px,30px)'});
+    else $(this).find('.test9').css({'background-color': 'silver', 'transform': 'none'});
+   	  if (!active5) $(this).find('.test10').css({'background-color': 'gray', 'transform': 'translate(-120px,-35px)'});
+    else $(this).find('.test10').css({'background-color': 'silver', 'transform': 'none'});
+    active1 = !active1;
+    active2 = !active2;
+    active3 = !active3;
+    active4 = !active4;
+    active5 = !active5;
+      
+    });
+});
+</script>
 </html
