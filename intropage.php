@@ -1,4 +1,7 @@
 <?php
+$con = mysql_connect('localhost','root','') or die(mysql_error());
+mysql_select_db('gnb',$con)or die(mysql_error());
+
 session_start();
 if(!isset($_SESSION["session_username"])) {
  header("location:login.php");
@@ -18,6 +21,9 @@ Bienvenido <?php echo $_SESSION['session_username'];?>!
 		
 		 <script src="/gnb/js/jquery-1.11.3.js"></script>
 	</head>
+	<body>
+
+<!--Menú Nº 1 y su contenido-->
 
 <div class="parent1">
   <div class="test1"></div>
@@ -59,43 +65,64 @@ $(document).ready(function() {
 });
 </script>
 
+<!--Formulario para añadir personas-->
+
+
 <br><br><br><br><br><br>
-<div id="contenido4" align="center">
-	<form action="agregarpersona.php" method="post">
-		<h3>Cedula <input type="text" name="cedula" class="tb10"></h3>
-		<h3>Nombres <input type="text" name="nombres"></h3>
-		<h3>Apellidos <input type="text" name="apellidos"></h3>
-		<h3>Fecha de Nacimiento <input type="text" name="fecha_nacimiento"></h3><br><br>
-		<h3>Lugar de Nacimiento <input type="text" name="lugar_nacimiento"></h3>
-		<h3>Sexo <select name="sexo">
+<div id="addpersonas" align="center">
+	<form action="agregarpersona.php" method="post" autocomplete="off" enctype="multipart/form-data">
+
+		<table class="formulario">
+			<tr><td>Cedula</td><td><input type="text" name="cedula" onkeypress="return justNumbers(event);" maxlength="8" required="required"></td></tr>
+			<tr><td>Nombres</td><td><input type="text" name="nombres" required="required"></td></tr>
+			<tr><td>Apellidos</td><td><input type="text" name="apellidos" required="required"></td></tr>
+			<tr><td>Fecha de Nacimiento</td><td><input type="date" name="fecha_nacimiento"></td></tr>
+			<tr><td>Lugar de Nacimiento</td><td><input type="text" name="lugar_nacimiento"></td></tr>
+			<tr><td>Sexo</td><td><select name="sexo" required="required">
+					<option >Seleccione</option>
 					<option value="m">Masculino</option>
 					<option value="f">Femenino</option>
-			</select></h3>
-		<h3>Foto <input type="text" name="foto"></h3>
-		<h3>Alias <input type="text" name="alias"></h3>
-		<h3>Ocupacion <input type="text" name="ocupacion"></h3><br><br>
-		<h3>Nacionalidad <input type="text" name="nacionalidad"></h3>
-		<h3>Estado civil <select name="estado_civil">
+			</select></h3></td></tr>
+			<tr><td>Foto</td><td><input type="file" name="imagen"></td></tr>
+			<tr><td>Alias</td><td><input type="text" name="alias"></td></tr>
+			<tr><td>Ocupacion</td><td><input type="text" name="ocupacion"></td></tr>
+			<tr><td>Nacionalidad</td><td><input type="text" name="nacionalidad"></td></tr>
+			<tr><td>Estado civil</td><td><select name="estado_civil">
+					<option >Seleccione</option>
 					<option value="Soltero">Soltero</option>
 					<option value="Casado">Casado</option>
 					<option value="Divorciado">Divorciado</option>
 					<option value="Viudo">Viudo</option>
-					</select></h3>
-		<h3>Descripcion <textarea name="descripcion"></textarea></h3>
-		<h3>Direcciones <textarea name="direcciones"></textarea></h3>
-		<h3>Antecedentes <textarea name="antecedentes"></textarea></h3>
+					</select></td></tr>
+			<tr><td>Descripcion</td><td><textarea name="descripcion"></textarea></td></tr>
+			<tr><td>Direcciones</td><td><textarea name="direcciones"></textarea></td></tr>
+			<tr><td>Antecedentes</td><td><textarea name="antecedentes"></textarea></td></tr>
+		</table>
 		<input type="submit" name="Enviar">
 	</form>
 </div>
 
+<script type="text/javascript">
+	function justNumbers(e)
+        {
+        var keynum = window.event ? window.event.keyCode : e.which;
+        if ((keynum == 8) || (keynum == 46))
+        return true;
+         
+        return /\d/.test(String.fromCharCode(keynum));
+        }
+</script>
+
+
+<!--Efecto para mostrar formulario Añadir personas-->
 
 <script type="text/javascript">
 
-$("#contenido4").hide();
+$("#addpersonas").hide();
 
   $(document).ready(function(){
    $("#test5").click(function () {
-      $("#contenido4").each(function() {
+      $("#addpersonas").each(function() {
         displaying = $(this).css("display");
         if(displaying == "block") {
           $(this).fadeOut('slow',function() {
@@ -111,6 +138,11 @@ $("#contenido4").hide();
   });
   </script>
 
+<!--Efectos para mostrar letras cuando el mouse esté ensima de menús y submenús-->
+
+
+<!--Efecto para el menú add-->
+
 <script>
 $(document).ready(function(){
    $(".mask1").mouseenter(function(e){
@@ -122,7 +154,11 @@ $(document).ready(function(){
 })
 </script>
 
-   <div class="tip" id="tip1">Abrir menú para añadir elementos</div>
+<div class="tip" id="tip1">Abrir menú para añadir elementos</div>
+
+
+
+<!--Menú nº 2 y su contenido-->
 
 
 
@@ -130,8 +166,8 @@ $(document).ready(function(){
   <div class="test6"></div>
   <div class="test7"></div>
   <div class="test8"></div>
-  <div class="test9" id="test4"></div>
-  <div class="test10" id="test5"></div>
+  <div class="test9"></div>
+  <div class="test10" id="test10"></div>
   <div class="mask2"></div>
 </div>
 
@@ -165,4 +201,63 @@ $(document).ready(function() {
     });
 });
 </script>
+
+
+<!--Mostrando las personas agregadas-->
+
+<script>
+function realizaProceso(cedula){
+        var parametros = {
+                "cedula" : cedula
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'ver.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+                }
+        });
+}
+</script>
+
+<div id="verpersonas" align="center">
+<input type="text" name="caja_texto" id="valor1"> 
+ 
+<input type="button" href="javascript:;" onclick="realizaProceso($('#valor1').val());return false;" value="Buscar">
+ 
+<br/>
+ 
+<span id="resultado"></span> 
+</div>
+
+ <!--Efecto para mostrar formulario Ver personas-->
+
+<script type="text/javascript">
+
+$("#verpersonas").hide();
+
+  $(document).ready(function(){
+   $("#test10").click(function () {
+      $("#verpersonas").each(function() {
+        displaying = $(this).css("display");
+        if(displaying == "block") {
+          $(this).fadeOut('slow',function() {
+           $(this).css("display","none");
+          });
+        } else {
+          $(this).fadeIn('slow',function() {
+            $(this).css("display","block");
+          });
+        }
+      });
+    });
+  });
+  </script>
+
+
+</body>
 </html

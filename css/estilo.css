@@ -1,11 +1,19 @@
 body {
 
-  background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* IE10 */
-  background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
-  background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
-        
+ background: rgba(89,108,120,1);
+background: -moz-radial-gradient(center, ellipse cover, rgba(89,108,120,1) 0%, rgba(27,39,56,1) 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(89,108,120,1)), color-stop(100%, rgba(27,39,56,1)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(89,108,120,1) 0%, rgba(27,39,56,1) 100%);
+background: -o-radial-gradient(center, ellipse cover, rgba(89,108,120,1) 0%, rgba(27,39,56,1) 100%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(89,108,120,1) 0%, rgba(27,39,56,1) 100%);
+background: radial-gradient(ellipse at center, rgba(89,108,120,1) 0%, rgba(27,39,56,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#596c78', endColorstr='#1b2738', GradientType=1 );
+}
+
+
+.formulario{
+  color: #fff;
+  font-size: 20px;
 }
 
 .tb10 {
@@ -20,7 +28,7 @@ body {
   font-family:tahoma, arial, sans-serif;
 }
 
-   .tip{
+.tip{
       margin-top: -5%;
       margin-left: 40%;
       padding: 10px;
@@ -28,4 +36,4 @@ body {
       position: absolute;
       font-family: sans-serif;
       font-size: 20px;
-   }
+}
