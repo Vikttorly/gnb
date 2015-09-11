@@ -2,8 +2,8 @@
 	<head>
 		<title>Introducir persona</title>
 		<meta charset='utf-8'>
-		<link href="css/estilo.css" rel="stylesheet" type="text/css">
-		<link href="css/menu.css" rel="stylesheet" type="text/css">
+		<link href="/gnb/css/estilo.css" rel="stylesheet" type="text/css">
+		<link href="/gnb/css/menu.css" rel="stylesheet" type="text/css">
 	</head>
 <body>
 
@@ -93,7 +93,7 @@ if (isset($_POST['Enviar'])){
 
 	";
 	}else{
-		$sql=("INSERT INTO personas(cedula,nombres,apellidos,alias,nacionalidad,fecha_nacimiento,lugar_nacimiento,sexo,foto,ocupacion,estado_civil,descripcion,direcciones,antecedentes) VALUES ('$cedula','$nombres','$apellidos','$alias','$nacionalidad','$fecha_nacimiento','$lugar_nacimiento','$sexo','$foto','$ocupacion','$estado_civil','$descripcion','$direcciones','$antecedentes')");
+		$sql=("INSERT INTO personas(fecha_adicion,cedula,nombres,apellidos,alias,nacionalidad,fecha_nacimiento,lugar_nacimiento,sexo,foto,ocupacion,estado_civil,descripcion,direcciones,antecedentes) VALUES (NOW(),'$cedula','$nombres','$apellidos','$alias','$nacionalidad','$fecha_nacimiento','$lugar_nacimiento','$sexo','$foto','$ocupacion','$estado_civil','$descripcion','$direcciones','$antecedentes')");
 		mysql_query($sql)or die(mysql_error());
 		echo "Se han introducido los valores";
 	}

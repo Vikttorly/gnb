@@ -36,6 +36,7 @@ if($usuario == $dbusuario && $clave == $dbclave)
 {
  
  $_SESSION['session_username']=$usuario;
+ $_SESSION['session_password']=$clave;
  
 /* Redirect browser */
  header("Location: intropage.php");

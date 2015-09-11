@@ -5,12 +5,9 @@ mysql_select_db('gnb',$con)or die(mysql_error());
 session_start();
 if(!isset($_SESSION["session_username"])) {
  header("location:login.php");
-} else {
-?>
-Bienvenido <?php echo $_SESSION['session_username'];?>!
- 
-<?php
-}
+ echo $_SESSION["session_username"];
+
+} 
 ?>
 <html>
 <head>
@@ -26,7 +23,7 @@ Bienvenido <?php echo $_SESSION['session_username'];?>!
 <!--Menú Nº 1 y su contenido-->
 
 <div class="parent1">
-  <div class="test1"></div>
+  <div class="test1" id="test1"></div>
   <div class="test2"></div>
   <div class="test3"></div>
   <div class="test4" id="test4"></div>
@@ -65,42 +62,50 @@ $(document).ready(function() {
 });
 </script>
 
+<!--Añadir fecha expediente-->
+<!--Añadir serial motor-->
+
 <!--Formulario para añadir personas-->
 
 
-<br><br><br><br><br><br>
+<br><br>
 <div id="addpersonas" align="center">
-	<form action="agregarpersona.php" method="post" autocomplete="off" enctype="multipart/form-data">
+<center><font color='white' size='16'>Añadir nueva persona</font></center>
+<br><br><br>
+	<form action="agregar/persona.php" method="post" autocomplete="off" enctype="multipart/form-data">
 
 		<table class="formulario">
 			<tr><td>Cedula</td><td><input type="text" name="cedula" onkeypress="return justNumbers(event);" maxlength="8" required="required"></td></tr>
 			<tr><td>Nombres</td><td><input type="text" name="nombres" required="required"></td></tr>
 			<tr><td>Apellidos</td><td><input type="text" name="apellidos" required="required"></td></tr>
+			<tr><td>Alias</td><td><input type="text" name="alias"></td></tr>
+			<tr><td>Nacionalidad</td><td><input type="text" name="nacionalidad"></td></tr>
 			<tr><td>Fecha de Nacimiento</td><td><input type="date" name="fecha_nacimiento"></td></tr>
 			<tr><td>Lugar de Nacimiento</td><td><input type="text" name="lugar_nacimiento"></td></tr>
 			<tr><td>Sexo</td><td><select name="sexo" required="required">
 					<option >Seleccione</option>
-					<option value="m">Masculino</option>
-					<option value="f">Femenino</option>
-			</select></h3></td></tr>
-			<tr><td>Foto</td><td><input type="file" name="imagen"></td></tr>
-			<tr><td>Alias</td><td><input type="text" name="alias"></td></tr>
+					<option value="M">Masculino</option>
+					<option value="F">Femenino</option>
+			</select></td></tr>
 			<tr><td>Ocupacion</td><td><input type="text" name="ocupacion"></td></tr>
-			<tr><td>Nacionalidad</td><td><input type="text" name="nacionalidad"></td></tr>
 			<tr><td>Estado civil</td><td><select name="estado_civil">
 					<option >Seleccione</option>
-					<option value="Soltero">Soltero</option>
-					<option value="Casado">Casado</option>
-					<option value="Divorciado">Divorciado</option>
-					<option value="Viudo">Viudo</option>
+					<option value="SOLTERO">Soltero</option>
+					<option value="CASADO">Casado</option>
+					<option value="DIVORCIADO">Divorciado</option>
+					<option value="VIUDO">Viudo</option>
 					</select></td></tr>
 			<tr><td>Descripcion</td><td><textarea name="descripcion"></textarea></td></tr>
 			<tr><td>Direcciones</td><td><textarea name="direcciones"></textarea></td></tr>
 			<tr><td>Antecedentes</td><td><textarea name="antecedentes"></textarea></td></tr>
+			<tr><td>Foto</td><td><input type="file" name="imagen"></td></tr>
 		</table>
 		<input type="submit" name="Enviar">
 	</form>
+	<input type="submit" id="ocultaraddpersonas" value="Ocultar">
 </div>
+
+<!--Script para que el campo cédula solo acepte números-->
 
 <script type="text/javascript">
 	function justNumbers(e)
@@ -113,8 +118,27 @@ $(document).ready(function() {
         }
 </script>
 
+<!--Ocultar div por boton OCULTAR addpersonas-->
 
-<!--Efecto para mostrar formulario Añadir personas-->
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+   $("#ocultaraddpersonas").click(function () {
+      $("#addpersonas").each(function() {
+        displaying = $(this).css("display");
+        if(displaying == "block") {
+          $(this).fadeOut('slow',function() {
+           $(this).css("display","none");
+          });
+        } 
+      });
+    });
+  });
+  </script>
+
+
+<!--Efecto para mostrar/ocultar formulario Añadir personas-->
 
 <script type="text/javascript">
 
@@ -137,6 +161,40 @@ $("#addpersonas").hide();
     });
   });
   </script>
+
+<!--Formulario para añadir Expediente-->
+
+<div id="añadirexpediente" align="center">
+	<form action="agregar/expediente.php" method="post" autocomplete="off" enctype="multipart/form-data">
+			
+		<input type="submit" name="enviar">
+	</form>
+</div>
+
+<!--Efecto para mostrar/ocultar formulario Añadir Expediente-->
+
+<script type="text/javascript">
+
+$("#añadirexpediente").hide();
+
+  $(document).ready(function(){
+   $("#test1").click(function () {
+      $("#añadirexpediente").each(function() {
+        displaying = $(this).css("display");
+        if(displaying == "block") {
+          $(this).fadeOut('slow',function() {
+           $(this).css("display","none");
+          });
+        } else {
+          $(this).fadeIn('slow',function() {
+            $(this).css("display","block");
+          });
+        }
+      });
+    });
+  });
+  </script>
+
 
 <!--Efectos para mostrar letras cuando el mouse esté ensima de menús y submenús-->
 
@@ -212,7 +270,7 @@ function realizaProceso(cedula){
         };
         $.ajax({
                 data:  parametros,
-                url:   'ver.php',
+                url:   'mostrar/porcedula.php',
                 type:  'post',
                 beforeSend: function () {
                         $("#resultado").html("Procesando, espere por favor...");
@@ -225,9 +283,11 @@ function realizaProceso(cedula){
 </script>
 
 <div id="verpersonas" align="center">
-<input type="text" name="caja_texto" id="valor1"> 
+<center><font color='white' size='16'>Buscar persona</font></center>
+<br><br>
+<input type="text" name="caja_texto" id="valor1" placeholder='Cédula' maxlength="8" onkeypress="return justNumbers(event);"> 
  
-<input type="button" href="javascript:;" onclick="realizaProceso($('#valor1').val());return false;" value="Buscar">
+<input type="button" href="javascript:;" onclick="realizaProceso($('#valor1').val());return false;" value="Buscar" name="porcedula" >
  
 <br/>
  
@@ -258,6 +318,16 @@ $("#verpersonas").hide();
   });
   </script>
 
+<script type="text/javascript">
+	function justNumbers(e)
+        {
+        var keynum = window.event ? window.event.keyCode : e.which;
+        if ((keynum == 8) || (keynum == 46))
+        return true;
+         
+        return /\d/.test(String.fromCharCode(keynum));
+        }
+</script>
 
 </body>
 </html
