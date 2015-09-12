@@ -5,7 +5,6 @@ mysql_select_db('gnb',$con)or die(mysql_error());
 session_start();
 if(!isset($_SESSION["session_username"])) {
  header("location:login.php");
- echo $_SESSION["session_username"];
 
 } 
 ?>
@@ -166,7 +165,17 @@ $("#addpersonas").hide();
 
 <div id="añadirexpediente" align="center">
 	<form action="agregar/expediente.php" method="post" autocomplete="off" enctype="multipart/form-data">
-			
+			<?php
+			setlocale(LC_ALL,"es_ES");
+			$funcionario = $_SESSION["session_username"];
+			$d = date('d');
+			$dia = $d -1;
+			$mes = date('m');
+			$anio = date('Y');
+			$fecha = ' hoy es: '.$dia.'/'.$mes.'/'.$anio;
+			echo $funcionario;
+			echo $fecha;
+			?>
 		<input type="submit" name="enviar">
 	</form>
 </div>
