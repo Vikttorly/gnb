@@ -93,7 +93,7 @@ if (isset($_POST['Enviar'])){
 
 	";
 	}else{
-		$sql=("INSERT INTO personas(fecha_adicion,cedula,nombres,apellidos,alias,nacionalidad,fecha_nacimiento,lugar_nacimiento,sexo,foto,ocupacion,estado_civil,descripcion,direcciones,antecedentes) VALUES (NOW(),'$cedula','$nombres','$apellidos','$alias','$nacionalidad','$fecha_nacimiento','$lugar_nacimiento','$sexo','$foto','$ocupacion','$estado_civil','$descripcion','$direcciones','$antecedentes')");
+		$sql=("INSERT INTO personas(cedula,nombres,apellidos,alias,nacionalidad,fecha_nacimiento,lugar_nacimiento,sexo,foto,ocupacion,estado_civil,descripcion,direcciones,antecedentes,fecha_adicion) VALUES ('$cedula','$nombres','$apellidos','$alias','$nacionalidad','$fecha_nacimiento','$lugar_nacimiento','$sexo','$foto','$ocupacion','$estado_civil','$descripcion','$direcciones','$antecedentes',NOW())");
 		mysql_query($sql)or die(mysql_error());
 		echo "Se han introducido los valores";
 	}
